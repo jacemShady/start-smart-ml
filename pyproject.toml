@@ -2,6 +2,13 @@
 name = "start-smart-ml"
 version = "0.1.0"
 requires-python = ">=3.12"
-
-[tool.vercel]
-entrypoint = "app_flask:app"
+dependencies = [
+  "flask>=3.0",
+  "flask-cors>=4.0",
+  "joblib>=1.3",
+  "numpy>=1.24",
+  "pandas>=2.0",
+  "scikit-learn==1.6.1",
+  "scipy>=1.10",
+  "openpyxl>=3.1",
+]
