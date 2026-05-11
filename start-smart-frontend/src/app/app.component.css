@@ -1,0 +1,5 @@
+.content {
+    padding-top: 64px;
+    /* Height of navbar */
+    min-height: calc(100vh - 64px);
+}

@@ -1,0 +1,60 @@
+<div class="dashboard-container animate-fade-in">
+    <header class="main-header">
+        <div class="logo-hero">
+            <span class="emoji">🎓</span>
+            <h1 class="brand-title">START SMART</h1>
+        </div>
+        <p class="brand-subtitle">Plateforme d'Apprentissage Adaptatif — ESPRIT</p>
+    </header>
+
+    <div class="accuracy-banner">
+        <div class="glass-card mini-stat">
+            <span class="v">95%</span>
+            <span class="l">Accuracy</span>
+        </div>
+        <div class="glass-card mini-stat">
+            <span class="v">0.91</span>
+            <span class="l">R² Score</span>
+        </div>
+        <div class="glass-card mini-stat">
+            <span class="v">1800</span>
+            <span class="l">Étudiants</span>
+        </div>
+    </div>
+
+    <div class="info-grid">
+        <div class="glass-card info-item">
+            <div class="icon">🎯</div>
+            <h3>Classification</h3>
+            <p>Prédit le niveau de risque académique (Low, Medium ou High Risk) avec une haute précision.</p>
+        </div>
+        <div class="glass-card info-item">
+            <div class="icon">📉</div>
+            <h3>Régression</h3>
+            <p>Analyse la probabilité d'abandon sur une échelle de 0 à 1 pour une intervention ciblée.</p>
+        </div>
+        <div class="glass-card info-item">
+            <div class="icon">🌳</div>
+            <h3>Algorithme</h3>
+            <p>Basé sur Random Forest (scikit-learn), garantissant robustesse et interprétabilité.</p>
+        </div>
+        <div class="glass-card info-item">
+            <div class="icon">📊</div>
+            <h3>Dataset</h3>
+            <p>Modèles entraînés sur 1800 étudiants réels de l'ESPRIT avec 59 variables clés.</p>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <button class="btn-primary main-cta" routerLink="/predict">
+            Analyser un étudiant <span class="emoji">→</span>
+        </button>
+    </div>
+
+    <div class="stats-viz" *ngIf="stats">
+        <div class="glass-card chart-box">
+            <h3>Distribution des Étudiants par Filière</h3>
+            <canvas #fieldChart></canvas>
+        </div>
+    </div>
+</div>

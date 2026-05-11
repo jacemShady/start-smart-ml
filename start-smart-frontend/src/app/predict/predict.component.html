@@ -1,0 +1,248 @@
+<div class="predict-container animate-fade-in">
+    <header>
+        <h1>Analyse de Profil</h1>
+        <div class="stepper-progress">
+            <div class="progress-bar" [style.width.%]="(activeStep/5)*100"></div>
+        </div>
+        <div class="steps-labels">
+            <span [class.active]="activeStep >= 1">Profil</span>
+            <span [class.active]="activeStep >= 2">Performances</span>
+            <span [class.active]="activeStep >= 3">Engagement</span>
+            <span [class.active]="activeStep >= 4">Logiciels</span>
+            <span [class.active]="activeStep >= 5">Signaux</span>
+        </div>
+    </header>
+
+    <div class="glass-card form-box">
+        <form [formGroup]="predictForm" (ngSubmit)="onSubmit()">
+
+            <!-- STEP 1 -->
+            <div *ngIf="activeStep === 1" class="step-content">
+                <h2>👤 Profil de l'Étudiant</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Âge</label>
+                        <input type="number" formControlName="age">
+                    </div>
+                    <div class="form-group">
+                        <label>Moyenne BAC (/20)</label>
+                        <input type="number" step="0.01" formControlName="bac_grade">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Genre</label>
+                    <div class="radio-cards">
+                        <label class="radio-card" [class.selected]="predictForm.get('gender')?.value === 'M'">
+                            <input type="radio" value="M" formControlName="gender">
+                            <span>Homme ♂️</span>
+                        </label>
+                        <label class="radio-card" [class.selected]="predictForm.get('gender')?.value === 'F'">
+                            <input type="radio" value="F" formControlName="gender">
+                            <span>Femme ♀️</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Filière Académique</label>
+                    <div class="selection-grid">
+                        <div *ngFor="let f of fields" class="grid-item-card"
+                            [class.selected]="predictForm.get('field')?.value === f.id"
+                            (click)="predictForm.get('field')?.setValue(f.id)">
+                            <span class="ico">{{ f.icon }}</span>
+                            <span class="lbl">{{ f.label }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Style d'Apprentissage</label>
+                    <div class="selection-grid sm">
+                        <div *ngFor="let s of learningStyles" class="grid-item-card"
+                            [class.selected]="predictForm.get('learning_style')?.value === s.id"
+                            (click)="predictForm.get('learning_style')?.setValue(s.id)">
+                            <span class="ico">{{ s.icon }}</span>
+                            <span class="lbl">{{ s.label }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Niveau Initial</label>
+                    <div class="pill-buttons">
+                        <button type="button" [class.active]="predictForm.get('initial_level')?.value === 'Beginner'"
+                            (click)="predictForm.get('initial_level')?.setValue('Beginner')">Débutant</button>
+                        <button type="button"
+                            [class.active]="predictForm.get('initial_level')?.value === 'Intermediate'"
+                            (click)="predictForm.get('initial_level')?.setValue('Intermediate')">Intermédiaire</button>
+                        <button type="button" [class.active]="predictForm.get('initial_level')?.value === 'Advanced'"
+                            (click)="predictForm.get('initial_level')?.setValue('Advanced')">Avancé</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2 -->
+            <div *ngIf="activeStep === 2" class="step-content">
+                <h2>📚 Performances Académiques</h2>
+                <div class="sliders-list">
+                    <div class="slider-group">
+                        <label>Performance Globale Quiz (%)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="100" formControlName="overall_quiz_performance">
+                            <span class="val-badge">{{ predictForm.get('overall_quiz_performance')?.value }}%</span>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>Score Examen Mi-Parcours (%)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="100" formControlName="midterm_exam_score">
+                            <span class="val-badge">{{ predictForm.get('midterm_exam_score')?.value }}%</span>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>Taux de Maîtrise des Concepts (%)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="100" formControlName="concept_mastery_rate_final">
+                            <span class="val-badge">{{ predictForm.get('concept_mastery_rate_final')?.value }}%</span>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>Moyenne des premières semaines (%)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="100" formControlName="early_avg_score">
+                            <span class="val-badge">{{ predictForm.get('early_avg_score')?.value }}%</span>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>Consistance des Performances (0-20)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="20" formControlName="performance_consistency">
+                            <span class="val-badge">{{ predictForm.get('performance_consistency')?.value }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 3 -->
+            <div *ngIf="activeStep === 3" class="step-content">
+                <h2>🎯 Engagement & Présence</h2>
+                <div class="sliders-list">
+                    <div class="slider-group">
+                        <label>Taux de Présence Global (%)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="100" formControlName="attendance_rate_avg">
+                            <span class="val-badge">{{ predictForm.get('attendance_rate_avg')?.value }}%</span>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>Fréquence de Connexion (jours/sem)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="14" formControlName="login_frequency_avg">
+                            <span class="val-badge">{{ predictForm.get('login_frequency_avg')?.value }}</span>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>Temps sur Plateforme (h/sem)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="20" formControlName="time_spent_platform_avg">
+                            <span class="val-badge">{{ predictForm.get('time_spent_platform_avg')?.value }}h</span>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>Score d'Engagement Global (0-30)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="30" formControlName="engagement_score">
+                            <span class="val-badge">{{ predictForm.get('engagement_score')?.value }}</span>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>Taux de remise des devoirs (%)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="100" formControlName="assignment_submission_rate_avg">
+                            <span class="val-badge">{{ predictForm.get('assignment_submission_rate_avg')?.value
+                                }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 4 -->
+            <div *ngIf="activeStep === 4" class="step-content">
+                <h2>🎮 BrainRush & Assistant IA</h2>
+                <div class="sliders-list">
+                    <div class="slider-group">
+                        <label>Jeux BrainRush Joués</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="300" formControlName="brainrush_games_played_total">
+                            <span class="val-badge">{{ predictForm.get('brainrush_games_played_total')?.value }}</span>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>Score Moyen BrainRush (%)</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="100" formControlName="brainrush_avg_score_avg">
+                            <span class="val-badge">{{ predictForm.get('brainrush_avg_score_avg')?.value }}%</span>
+                        </div>
+                    </div>
+                    <div class="slider-group">
+                        <label>Sessions Chat IA Utilisées</label>
+                        <div class="slider-wrapper">
+                            <input type="range" min="0" max="100" formControlName="ai_chat_sessions_total">
+                            <span class="val-badge">{{ predictForm.get('ai_chat_sessions_total')?.value }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group center">
+                        <label>Note Feedback IA (1-5)</label>
+                        <div class="star-rating">
+                            <span *ngFor="let i of [1,2,3,4,5]"
+                                (click)="predictForm.get('ai_feedback_rating_avg')?.setValue(i)"
+                                [class.filled]="predictForm.get('ai_feedback_rating_avg')?.value >= i">★</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 5 -->
+            <div *ngIf="activeStep === 5" class="step-content">
+                <h2>⚡ Signaux de Détection Précoces</h2>
+                <div class="final-step-layout">
+                    <div class="sliders-list">
+                        <div class="slider-group">
+                            <label>Fréq. Connexion Début de Semestre</label>
+                            <input type="range" min="0" max="14" formControlName="early_login_frequency">
+                            <div class="val-line">{{ predictForm.get('early_login_frequency')?.value }} fois/sem</div>
+                        </div>
+                        <div class="slider-group">
+                            <label>Taux Présence Début Semestre (%)</label>
+                            <input type="range" min="0" max="100" formControlName="early_attendance_rate">
+                            <div class="val-line">{{ predictForm.get('early_attendance_rate')?.value }}%</div>
+                        </div>
+                        <div class="slider-group">
+                            <label>Probabilité d'Abandon Précoce (%)</label>
+                            <input type="range" min="0" max="1" step="0.01" formControlName="early_dropout_probability">
+                            <div class="val-line">{{ (predictForm.get('early_dropout_probability')?.value *
+                                100).toFixed(0) }}%</div>
+                        </div>
+                    </div>
+
+                    <div class="viz-radar">
+                        <canvas #radarCanvas id="radarCanvas"></canvas>
+                        <p class="radar-legend">Profil de l'étudiant en 6 dimensions</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="button" *ngIf="activeStep > 1" class="btn-outline"
+                    (click)="setStep(activeStep - 1)">Précédent</button>
+                <button type="button" *ngIf="activeStep < 5" class="btn-primary"
+                    (click)="setStep(activeStep + 1)">Suivant</button>
+                <button type="submit" *ngIf="activeStep === 5" class="btn-primary" [disabled]="loading">
+                    <span *ngIf="!loading">🔍 Analyser le profil</span>
+                    <span *ngIf="loading">Analyse en cours...</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

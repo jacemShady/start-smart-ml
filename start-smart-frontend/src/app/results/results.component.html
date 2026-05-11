@@ -1,0 +1,72 @@
+<div class="results-container animate-fade-in" *ngIf="result">
+    <header>
+        <h1>Résultats de l'Analyse</h1>
+    </header>
+
+    <div class="results-grid">
+        <!-- LEFT COLUMN -->
+        <div class="col-left">
+            <div class="risk-hero" [ngClass]="getRiskClass()">
+                <div class="risk-info">
+                    <span class="big-icon">{{ getRiskIcon() }}</span>
+                    <div class="text">
+                        <h2>{{ getRiskLabel() }}</h2>
+                        <p>Niveau de risque détecté</p>
+                    </div>
+                </div>
+                <div class="confidence">
+                    <span class="val">{{ result.risk_probabilities[result.risk_level].toFixed(1) }}%</span>
+                    <span class="lbl">Confiance</span>
+                </div>
+            </div>
+
+            <div class="glass-card prob-card">
+                <h3>Répartition des Probabilités</h3>
+                <canvas id="probChart"></canvas>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div class="col-right">
+            <div class="gauges-row">
+                <!-- Gauge 1 -->
+                <div class="gauge-box">
+                    <svg class="gauge" viewBox="0 0 100 100">
+                        <circle class="bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="fill" cx="50" cy="50" r="45"
+                            [ngStyle]="getGaugeStyle(result.dropout_probability)"></circle>
+                    </svg>
+                    <div class="gauge-value">
+                        <span class="v">{{ result.dropout_probability.toFixed(1) }}%</span>
+                        <span class="l">Abandon</span>
+                    </div>
+                </div>
+                <!-- Gauge 2 -->
+                <div class="gauge-box">
+                    <svg class="gauge" viewBox="0 0 100 100">
+                        <circle class="bg" cx="50" cy="50" r="45"></circle>
+                        <circle class="fill" cx="50" cy="50" r="45" [ngStyle]="getGaugeStyle(65)"></circle>
+                    </svg>
+                    <div class="gauge-value">
+                        <span class="v">65%</span>
+                        <span class="l">Engagement</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="recommendations-box">
+                <h3>Recommandations Personnalisées</h3>
+                <div class="rec-list">
+                    <div *ngFor="let rec of result.recommendations" class="rec-card" [ngClass]="'type-' + rec.type">
+                        <span class="r-icon">💡</span>
+                        <p>{{ rec.text }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <button class="btn-primary" routerLink="/predict">↩ Nouvelle analyse</button>
+    </div>
+</div>

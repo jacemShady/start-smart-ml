@@ -1,0 +1,18 @@
+# Node
+node_modules/
+dist/
+.angular/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+
+# Large Binary Files (Optional: keep models if you want them in repo)
+# models/*.pkl
+
+# OS
+.DS_Store
+Thumbs.db

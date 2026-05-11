@@ -1,0 +1,21 @@
+{
+  "total_students": 1800,
+  "avg_age": 19.97388888888889,
+  "gender_dist": {
+    "M": 906,
+    "F": 894
+  },
+  "field_dist": {
+    "G\u00e9nie \u00c9lectrique": 385,
+    "T\u00e9l\u00e9communications": 370,
+    "G\u00e9nie M\u00e9canique": 363,
+    "Informatique": 343,
+    "G\u00e9nie Civil": 339
+  },
+  "avg_bac_grade": 13.049583333333333,
+  "avg_attendance": 43.81947222222223,
+  "avg_quiz_perf": 28.39969027777778,
+  "risk_dist": {},
+  "avg_dropout_prob": 0.0,
+  "engagement_vs_performance": 0.8127111420992611
+}
