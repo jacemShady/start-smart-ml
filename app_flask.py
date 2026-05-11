@@ -55,6 +55,17 @@ def encode_input(data):
         'performance_consistency':       float(data.get('performance_consistency', 5)),
     }
 
+@app.route('/')
+def index():
+    return jsonify({
+        'service': 'Start Smart ML API',
+        'docs': {
+            'health': {'method': 'GET', 'path': '/api/health'},
+            'predict': {'method': 'POST', 'path': '/api/predict'},
+            'stats': {'method': 'GET', 'path': '/api/stats'},
+        },
+    })
+
 @app.route('/api/predict', methods=['POST'])
 def predict():
     try:
